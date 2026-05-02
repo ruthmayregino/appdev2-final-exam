@@ -1,7 +1,6 @@
 import { ConvexProvider, ConvexReactClient } from "convex/react";
 import TodoScreen from "./screens/TodoScreen";
 import LoginScreen from "./screens/LoginScreen";
-import { useState } from "react";
 
 import { Id } from "./convex/_generated/dataModel";
 
