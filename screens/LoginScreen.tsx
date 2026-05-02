@@ -18,7 +18,7 @@ interface LoginProps {
     onLogin: (id: Id<"users">) => void
 }
 
-const LoginScreen = ({ onLogin } : LoginProps) => {
+const LoginScreen = ({ onLogin, navigation }: any) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -111,7 +111,7 @@ const LoginScreen = ({ onLogin } : LoginProps) => {
 
                 <View style={styles.footer}>
                     <Text>Don't have an account? </Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
                         <Text style={styles.linkText}>Sign Up</Text>
                     </TouchableOpacity>
                 </View>

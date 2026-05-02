@@ -1,38 +1,50 @@
 import { ConvexProvider, ConvexReactClient } from "convex/react";
 import { useState } from "react";
 
-import TodoScreen from "./screens/TodoScreen";
-import SignupScreen from "./screens/SignupScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 import LoginScreen from "./screens/LoginScreen";
+import SignupScreen from "./screens/SignupScreen";
+import TodoScreen from "./screens/TodoScreen";
 
 import { Id } from "./convex/_generated/dataModel";
 
-const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!);
+const Stack = createNativeStackNavigator();
+
+const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
+  unsavedChangesWarning: false,
+});
 
 export default function App() {
   const [userId, setUserId] = useState<Id<"users"> | null>(null);
-  const [isLogin, setIsLogin] = useState(true);
-
-  let content;
-
-  if (userId) {
-    content = <TodoScreen userId={userId} />;
-  } else if (isLogin) {
-    content = (
-      <LoginScreen
-        onLogin={(id: Id<"users">) => setUserId(id)}
-        goToSignup={() => setIsLogin(false)}
-      />
-    );
-  } else {
-    content = (
-      <SignupScreen goToLogin={() => setIsLogin(true)} />
-    );
-  }
 
   return (
     <ConvexProvider client={convex}>
-      {content}
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          
+          {userId ? (
+            <Stack.Screen name="Todo">
+              {() => <TodoScreen userId={userId} />}
+            </Stack.Screen>
+          ) : (
+            <>
+              <Stack.Screen name="Login">
+                {(props) => (
+                  <LoginScreen
+                    {...props}
+                    onLogin={(id: Id<"users">) => setUserId(id)}
+                  />
+                )}
+              </Stack.Screen>
+
+              <Stack.Screen name="Signup" component={SignupScreen} />
+            </>
+          )}
+
+        </Stack.Navigator>
+      </NavigationContainer>
     </ConvexProvider>
   );
 }

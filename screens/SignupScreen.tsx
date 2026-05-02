@@ -14,7 +14,7 @@ export default function SignupScreen() {
     <View style={styles.container}>
       <View style={styles.header}>
         <Image
-          source={require("../assets/Signup.webp")}
+          source={require("/Users/ruthmayregino/Documents/appdev2-final-exam/assets/signup.webp")}
           style={styles.image}
           resizeMode="contain"
         />
@@ -22,10 +22,10 @@ export default function SignupScreen() {
 
       <View style={styles.formContainer}>
         <Text style={styles.label}>Full Name</Text>
-        <TextInput style={styles.input} placeholder="John Doe" />
+        <TextInput style={styles.input} placeholder="Ruth May Regino" />
 
         <Text style={styles.label}>Email Address</Text>
-        <TextInput style={styles.input} placeholder="john@gmail.com" />
+        <TextInput style={styles.input} placeholder="ruth@gmail.com" />
 
         <Text style={styles.label}>Password</Text>
         <TextInput
